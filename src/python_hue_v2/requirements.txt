@@ -1,2 +1,4 @@
 azure-functions
-python-hue-v2
+azure-functions-runtime
+requests
+urllib3
