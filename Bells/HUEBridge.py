@@ -2,6 +2,7 @@ import os
 import json
 import logging
 from typing import Any, Dict, Optional, Tuple
+from python_hue_v2 import Hue
 
 import azure.functions as func
 import requests

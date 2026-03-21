@@ -2,7 +2,7 @@ name: Build and deploy Python project to Azure Function App - DEV-SE-Hue-FuncApp
 
 on:
   push:
-    branches: [ main ]
+    branches: [ hue-src-import ]
   workflow_dispatch:
 
 env:
@@ -43,3 +43,8 @@ jobs:
           enable-oryx-build: true
           respect-funcignore: true
           remote-build: true
+      
+      - name: Smoke test imports (pre-deploy)
+        run: |
+              python -c "import sys, os; sys.path.insert(0,'src'); import python_hue_v2; from python_hue_v2 import Hue; import requests; print('OK: Hue + requests import')"
+
