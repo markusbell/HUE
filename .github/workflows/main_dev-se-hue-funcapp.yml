@@ -3,7 +3,8 @@ name: Build and deploy Python project to Azure Function App - DEV-SE-Hue-FuncApp
 on:
   push:
     branches:
-      - hue-src-import
+      - main
+  workflow_dispatch: 
 
 env:
   AZURE_FUNCTIONAPP_NAME: DEV-SE-Hue-FuncApp
