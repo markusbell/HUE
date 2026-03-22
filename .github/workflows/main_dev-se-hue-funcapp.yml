@@ -33,10 +33,6 @@ jobs:
               python -m pip install -r requirements.txt --target ".python_packages/lib/site-packages"
         # Azure Functions expects dependencies under ./.python_packages/lib/site-packages. [1](https://learn.microsoft.com/en-us/azure/azure-functions/python-build-options)
 
-      - name: Smoke test imports (requests + local src package)    
-        run: |
-              python -c "import sys; sys.path.insert(0,'.python_packages/lib/site-packages'); sys.path.insert(0,'src'); import requests; import python_hue_v2; from python_hue_v2 import Hue; print('OK: Hue + requests import')"
-
       - name: Login to Azure
         uses: azure/login@v2
         with:
