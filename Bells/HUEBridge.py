@@ -330,3 +330,23 @@ def set_light_state(req: func.HttpRequest) -> func.HttpResponse:
     except Exception as ex:
         log.exception("set_light_state failed")
         return _bad_gateway(str(ex))
+
+def _check_api_key(req: func.HttpRequest) -> Optional[func.HttpResponse]:
+    # Erwarteten Schlüssel aus Env nehmen (Primär: AZURE_OPENAI_KEY)
+    expected = os.getenv("AZURE_OPENAI_KEY") or os.getenv("AZURE_OPENAPI_KEY")
+    if not expected:
+        return func.HttpResponse(
+            body=json.dumps({
+                "error": "Server misconfigured",
+                "detail": "Missing app setting: AZURE_OPENAI_KEY"
+            }),
+            status_code=500,
+            mimetype="application/json",
+        )
+
+    # Schlüssel kommt vom Connector als Header
+    got = req.headers.get("x-api-key")
+    if not got or got != expected:
+        return _unauthorized()
+
+    return None
